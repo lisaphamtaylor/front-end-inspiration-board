@@ -54,7 +54,14 @@ function App() {
         setSelectedBoard(board);
         axios
           .get(`${URL}/boards/${id}/cards`)
-          .then((response) => console.log(response));
+          .then((response) => {
+            console.log(response.data);
+            const cardsArray = response.data;
+            setCardsData(cardsArray);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -103,7 +110,7 @@ function App() {
           <section className='grid-item' id='board-display'>
             <h2>CARDS FOR BOARD TITLE</h2>
 
-            {selectedBoard.id ? <CardList id={selectedBoard.Board} /> : ''}
+            {selectedBoard.id ? <CardList cards={cardsData}></CardList> : ''}
           </section>
           <section className='grid-item' id='new-card'>
             <h2>CREATE A NEW CARD</h2>
