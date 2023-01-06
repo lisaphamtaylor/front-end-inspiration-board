@@ -4,7 +4,6 @@ import BoardList from './components/BoardList';
 import Board from './components/Board';
 import axios from 'axios';
 
-// testing commit
 function App() {
   const [boardListData, setBoardListData] = useState([]);
   // const [boardData, setBoardData] = useState([]);
@@ -12,8 +11,6 @@ function App() {
 
   const boardInfoFromJson = (board) => {
     const { id, title, owner } = board;
-    console.log(board);
-    console.log({ id, title, owner });
     return { id, title, owner };
   };
 
@@ -21,9 +18,7 @@ function App() {
     return axios
       .get(`${URL}/boards`)
       .then((response) => {
-        // console.log(response);
         const newBoardList = response.data.map(boardInfoFromJson);
-        console.log(newBoardList);
         return newBoardList;
       })
       .catch((error) => {
@@ -45,26 +40,17 @@ function App() {
     refreshBoards();
   }, []);
 
-  // const getBoard = (board_id) => {
-  //   axios
-  //     .get(`${URL}/boards/${board_id}`)
-  //     .then((response) => {
-  //       console.log(response);
-  //       // const newBoard = response.data.map((board) => {
-  //       //   return {
-  //       //     board_id: board.id,
-  //       //     title: board.title,
-  //       //     owner: board.owner,
-  //       //     cards: board.cards,
-  //       //   };
-  //       // });
-  //       // setBoardData(newBoard);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  // useEffect(getBoard, []);
+  const getBoard = (id) => {
+    axios
+      .get(`${URL}/boards/${id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(getBoard, []);
 
   return (
     <div id='App'>
@@ -74,7 +60,11 @@ function App() {
           <section className='grid-item' id='boards'>
             <h2>BOARDS</h2>
 
-            <BoardList boards={boardListData} onGetBoardList={getBoardList} />
+            <BoardList
+              boards={boardListData}
+              onGetBoardList={getBoardList}
+              onSelectBoard={getBoard}
+            />
             {/* <Board id={} */}
           </section>
           <section className='grid-item' id='selected-board'>
