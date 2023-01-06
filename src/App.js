@@ -1,0 +1,120 @@
+import './App.css';
+import { React, useEffect, useState } from 'react';
+import BoardList from './components/BoardList';
+import Board from './components/Board';
+import axios from 'axios';
+
+// testing commit
+function App() {
+  const [boardListData, setBoardListData] = useState([]);
+  // const [boardData, setBoardData] = useState([]);
+  const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
+
+  const boardInfoFromJson = (board) => {
+    const { id, title, owner } = board;
+    console.log(board);
+    console.log({ id, title, owner });
+    return { id, title, owner };
+  };
+
+  const getBoardList = () => {
+    return axios
+      .get(`${URL}/boards`)
+      .then((response) => {
+        // console.log(response);
+        const newBoardList = response.data.map(boardInfoFromJson);
+        console.log(newBoardList);
+        return newBoardList;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const refreshBoards = () => {
+    return getBoardList()
+      .then((boards) => {
+        setBoardListData(boards);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  useEffect(() => {
+    refreshBoards();
+  }, []);
+
+  // const getBoard = (board_id) => {
+  //   axios
+  //     .get(`${URL}/boards/${board_id}`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       // const newBoard = response.data.map((board) => {
+  //       //   return {
+  //       //     board_id: board.id,
+  //       //     title: board.title,
+  //       //     owner: board.owner,
+  //       //     cards: board.cards,
+  //       //   };
+  //       // });
+  //       // setBoardData(newBoard);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(getBoard, []);
+
+  return (
+    <div id='App'>
+      <header className='App-header'>INSPIRATION BOARD</header>
+      <main>
+        <div className='board-container'>
+          <section className='grid-item' id='boards'>
+            <h2>BOARDS</h2>
+
+            <BoardList boards={boardListData} onGetBoardList={getBoardList} />
+            {/* <Board id={} */}
+          </section>
+          <section className='grid-item' id='selected-board'>
+            <h2>SELECTED BOARD</h2>
+            <p>Select a Board from the Board List!</p>
+          </section>
+          <section className='grid-item' id='new-board'>
+            <h2>CREATE A NEW BOARD</h2>
+            <form>
+              <label>Title</label>
+              <input type='text' />
+              <br />
+              <label>Owner's Name</label>
+              <input type='text' />
+              <p>Preview: Title - Owner's Name</p>
+              <input type='Submit'></input>
+            </form>
+            <button className='toggle-new-board-form'>
+              Hide New Board Form
+            </button>
+          </section>
+        </div>
+        <div className='card-container'>
+          <section className='grid-item' id='board-display'>
+            <h2>CARDS FOR BOARD TITLE</h2>
+            {/* <Board board_id={boardData.board_id} /> */}
+          </section>
+          <section className='grid-item' id='new-card'>
+            <h2>CREATE A NEW CARD</h2>
+            <form>
+              <label>Message</label>
+              <input type='text' />
+              <p>Preview: Message</p>
+              <input type='Submit'></input>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default App;
