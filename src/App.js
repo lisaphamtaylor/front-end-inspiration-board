@@ -6,7 +6,11 @@ import axios from 'axios';
 
 function App() {
   const [boardListData, setBoardListData] = useState([]);
-  // const [boardData, setBoardData] = useState([]);
+  const [selectedBoard, setSelectedBoard] = useState({
+    title: '',
+    owner: '',
+    board_id: null,
+  });
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
   const boardInfoFromJson = (board) => {
@@ -44,13 +48,13 @@ function App() {
     axios
       .get(`${URL}/boards/${id}`)
       .then((response) => {
-        console.log(response);
+        const board = response.data;
+        setSelectedBoard(board);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  useEffect(getBoard, []);
 
   return (
     <div id='App'>
@@ -69,7 +73,11 @@ function App() {
           </section>
           <section className='grid-item' id='selected-board'>
             <h2>SELECTED BOARD</h2>
-            <p>Select a Board from the Board List!</p>
+            <p>
+              {selectedBoard.id
+                ? `${selectedBoard.title} - ${selectedBoard.owner}`
+                : 'Select a Board from the Board List!'}
+            </p>
           </section>
           <section className='grid-item' id='new-board'>
             <h2>CREATE A NEW BOARD</h2>
