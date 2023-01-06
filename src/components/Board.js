@@ -4,19 +4,19 @@ import React from 'react';
 import Card from './Card';
 
 const Board = ({ id, title, owner, cards }) => {
-  const cardComponents = cards.map((card, index) => {
-    return (
-      <div key={index}>
-        <Card
-          card_id={card.card_id}
-          message={card.message}
-          likes_count={card.likes_count}
-        />
-      </div>
-    );
-  });
+  // const cardComponents = cards.map((card, index) => {
+  //   return (
+  //     <div key={index}>
+  //       <Card
+  //         card_id={card.card_id}
+  //         message={card.message}
+  //         likes_count={card.likes_count}
+  //       />
+  //     </div>
+  //   );
+  // });
 
-  return <div>{title}<ol>{cardComponents}</ol></div>;
+  return <div>{title}<ol>{<CardList cards={cards}/>}</ol></div>;
 };
 
 Board.propTypes = {

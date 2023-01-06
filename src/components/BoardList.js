@@ -6,12 +6,13 @@ const BoardList = ({ boards }) => {
   const boardComponents = boards.map((board, index) => {
     return (
       <div key={index}>
-        <Board
+        <div>{board.title}</div>
+        {/* <Board
           id={board.id}
           title={board.title}
           owner={board.owner}
           cards={[]}
-        />
+        /> */}
       </div>
     );
   });
