@@ -2,7 +2,7 @@ import '../App.css';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Card = ({ card_id, message, likes_count }) => {
+const Card = ({ message, likes_count }) => {
   return (
     <div className='card-item'>
       <p className='card-message'>{message}</p>
@@ -22,7 +22,7 @@ const Card = ({ card_id, message, likes_count }) => {
 };
 
 Card.propTypes = {
-  card_id: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
   message: PropTypes.string,
   likes_count: PropTypes.number,
 };
