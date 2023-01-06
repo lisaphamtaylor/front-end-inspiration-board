@@ -1,6 +1,7 @@
 import './App.css';
 import { React, useEffect, useState } from 'react';
 import BoardList from './components/BoardList';
+import CardList from './components/CardList';
 import Board from './components/Board';
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ function App() {
     owner: '',
     board_id: null,
   });
+  const [cardsData, setCardsData] = useState([]);
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
   const boardInfoFromJson = (board) => {
@@ -50,6 +52,9 @@ function App() {
       .then((response) => {
         const board = response.data;
         setSelectedBoard(board);
+        axios
+          .get(`${URL}/boards/${id}/cards`)
+          .then((response) => console.log(response));
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +74,6 @@ function App() {
               onGetBoardList={getBoardList}
               onSelectBoard={getBoard}
             />
-            {/* <Board id={} */}
           </section>
           <section className='grid-item' id='selected-board'>
             <h2>SELECTED BOARD</h2>
@@ -98,7 +102,8 @@ function App() {
         <div className='card-container'>
           <section className='grid-item' id='board-display'>
             <h2>CARDS FOR BOARD TITLE</h2>
-            {/* <Board board_id={boardData.board_id} /> */}
+
+            {selectedBoard.id ? <CardList id={selectedBoard.Board} /> : ''}
           </section>
           <section className='grid-item' id='new-card'>
             <h2>CREATE A NEW CARD</h2>
