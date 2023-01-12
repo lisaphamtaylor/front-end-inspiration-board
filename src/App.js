@@ -70,7 +70,10 @@ function App() {
 
   return (
     <div id='App'>
-      <header className='App-header'>INSPIRATION BOARD</header>
+      <header className='App-header'>
+        LLAMMMAS' INSPIRATION BOARD
+        {/* <img alt='' src='./public/llama-clipart.png' /> */}
+      </header>
       <main>
         <div className='board-container'>
           <section className='grid-item' id='boards'>

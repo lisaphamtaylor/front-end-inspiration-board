@@ -3,15 +3,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  /* min-height: 50vh; */
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
-  justify-content: center;
+  background-image: linear-gradient(blue, teal);
   font-size: 2em;
   font-weight: bold;
   color: white;
+  border-radius: 5em;
+  padding: 0.5em;
+  margin: 0.5em;
+  transform: rotate(-5deg) skew(-7deg);
 }
 
 h2 {
