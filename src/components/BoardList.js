@@ -17,7 +17,7 @@ const BoardList = ({ boards, onSelectBoard }) => {
     );
   });
 
-  return <ul>{boardComponents}</ul>;
+  return <div>{boardComponents}</div>;
 };
 
 BoardList.propTypes = {

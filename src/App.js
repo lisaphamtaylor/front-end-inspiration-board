@@ -107,7 +107,7 @@ function App() {
           </section>
         </div>
         <div className='card-container'>
-          <section className='grid-item' id='board-display'>
+          <section className='grid-item'>
             <h2>CARDS FOR BOARD TITLE</h2>
 
             {selectedBoard.id ? <CardList cards={cardsData}></CardList> : ''}
