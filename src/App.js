@@ -71,8 +71,19 @@ function App() {
   return (
     <div id='App'>
       <header className='App-header'>
+        <img alt='cartoon of llama' src={require('./images/happy-llama.png')} />
+        <img alt='cartoon of llama' src={require('./images/happy-llama.png')} />
         LLAMMMAS' INSPIRATION BOARD
-        {/* <img alt='' src='./public/llama-clipart.png' /> */}
+        <img
+          alt='cartoon of llama'
+          src={require('./images/happy-llama.png')}
+          class='flipped-llama'
+        />
+        <img
+          alt='cartoon image of llama'
+          src={require('./images/happy-llama.png')}
+          class='flipped-llama'
+        />
       </header>
       <main>
         <div className='board-container'>

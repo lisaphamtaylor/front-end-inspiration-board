@@ -3,19 +3,38 @@
 }
 
 .App-header {
-  background-image: linear-gradient(blue, teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(rgb(139, 211, 244), teal);
   font-size: 2em;
   font-weight: bold;
+  font-style: italic;
   color: white;
   border-radius: 5em;
   padding: 0.5em;
   margin: 0.5em;
-  transform: rotate(-5deg) skew(-7deg);
+  /* transform: rotate(-3deg) skew(-7deg); */
+}
+
+.flipped-llama {
+  transform: scaleX(-1);
+
 }
 
 h2 {
   font-size: 1.5em;
   font-weight: bold;
+  color: teal;
+  border-radius: 5em;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-color: teal;
+  border-style: dashed;
+  display: inline-block
+}
+img {
+  height: 4em;
 }
 
 li {
@@ -34,11 +53,11 @@ li {
 }
 
 .grid-item {
-  border-color: black;
+  /* border-color: black;
   border-radius: 5em;
   border-style: dashed;
   padding: 1em;
-  margin: 1em;
+  margin: 1em; */
 }
 
 .card-item {
@@ -64,4 +83,5 @@ li {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  justify-content: center;
 }
