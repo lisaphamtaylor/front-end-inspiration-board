@@ -1,27 +1,3 @@
-#App {
-  text-align: center;
-}
-
-.App-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: linear-gradient(rgb(139, 211, 244), teal);
-  font-size: 2em;
-  font-weight: bold;
-  font-style: italic;
-  color: white;
-  border-radius: 5em;
-  padding: 0.5em;
-  margin: 0.5em;
-  /* transform: rotate(-3deg) skew(-7deg); */
-}
-
-.flipped-llama {
-  transform: scaleX(-1);
-
-}
-
 h2 {
   font-size: 1.5em;
   font-weight: bold;
@@ -31,7 +7,8 @@ h2 {
   margin: 0.5em;
   border-color: teal;
   border-style: dashed;
-  display: inline-block
+  display: inline-block;
+  box-shadow: -10px 7px 7px lightgrey;
 }
 img {
   height: 4em;
@@ -40,6 +17,8 @@ img {
 li {
   list-style-type: none;
 }
+
+
 
 .board-container {
   display: grid;
@@ -50,14 +29,7 @@ li {
 .card-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-}
-
-.grid-item {
-  /* border-color: black;
-  border-radius: 5em;
-  border-style: dashed;
-  padding: 1em;
-  margin: 1em; */
+  margin-top: 2rem;
 }
 
 .card-item {
@@ -79,9 +51,57 @@ li {
   font-size: 1.5em;
 }
 
+.flipped-llama {
+  transform: scaleX(-1);
+
+}
+
+.grid-item {
+  /* border-color: black;
+  border-radius: 5em;
+  border-style: dashed;
+  padding: 1em;
+  margin: 1em; */
+  
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(rgb(139, 211, 244), teal);
+  font-size: 2em;
+  font-weight: bold;
+  font-style: italic;
+  color: white;
+  border-radius: 5em;
+  padding: 0.5em;
+  margin: 0.5em;
+  /* transform: rotate(-3deg) skew(-7deg); */
+}
+
+#App {
+  text-align: center;
+}
+
+#boards {
+  display:flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#boards-scroll-list {
+  height: 9rem;
+  width: 15rem;
+  overflow: scroll;
+  text-align: left;
+  border: black solid 1px;
+}
+
 #board-display {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
 }
+

@@ -85,17 +85,20 @@ function App() {
           class='flipped-llama'
         />
       </header>
+
       <main>
         <div className='board-container'>
           <section className='grid-item' id='boards'>
             <h2>BOARDS</h2>
-
-            <BoardList
-              boards={boardListData}
-              onGetBoardList={getBoardList}
-              onSelectBoard={getBoard}
-            />
+            <div id='boards-scroll-list'>
+              <BoardList
+                boards={boardListData}
+                onGetBoardList={getBoardList}
+                onSelectBoard={getBoard}
+              />
+            </div>
           </section>
+
           <section className='grid-item' id='selected-board'>
             <h2>SELECTED BOARD</h2>
             <p>
@@ -104,36 +107,41 @@ function App() {
                 : 'Select a Board from the Board List!'}
             </p>
           </section>
+
           <section className='grid-item' id='new-board'>
             <h2>CREATE A NEW BOARD</h2>
             <form>
-              <label>Title</label>
+              <label>Title: </label>
               <input type='text' />
               <br />
-              <label>Owner's Name</label>
+              <br />
+              <label>Owner's Name: </label>
               <input type='text' />
-              <p>Preview: Title - Owner's Name</p>
-              <input type='Submit'></input>
             </form>
+            <br />
+            <p>Preview: Title - Owner's Name</p>
+            <input type='Submit'></input>
+
             <button className='toggle-new-board-form'>
               Hide New Board Form
             </button>
           </section>
         </div>
+
         <div className='card-container'>
           <section className='grid-item'>
             <h2>CARDS FOR BOARD TITLE</h2>
-
             {selectedBoard.id ? <CardList cards={cardsData}></CardList> : ''}
           </section>
+
           <section className='grid-item' id='new-card'>
             <h2>CREATE A NEW CARD</h2>
             <form>
-              <label>Message</label>
+              <label>Message: </label>
               <input type='text' />
-              <p>Preview: Message</p>
-              <input type='Submit'></input>
             </form>
+            <p>Preview: Message</p>
+            <input type='Submit'></input>
           </section>
         </div>
       </main>
