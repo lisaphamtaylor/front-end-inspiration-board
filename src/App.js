@@ -5,6 +5,7 @@ import CardList from './components/CardList';
 import Board from './components/Board';
 import axios from 'axios';
 import NewCardForm from './components/NewCardForm';
+import NewBoardForm from './components/NewBoardForm';
 
 function App() {
   const [boardListData, setBoardListData] = useState([]);
@@ -13,6 +14,11 @@ function App() {
     owner: '',
     board_id: null,
   });
+  const [boardFormVisible, setBoardFormVisible] = useState(true);
+  const hideBoardForm = () => {
+    setBoardFormVisible(!boardFormVisible)
+  }
+
   const [cardsData, setCardsData] = useState([]);
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
@@ -89,6 +95,27 @@ function App() {
 
   };
 
+  const addNewBoard = (newBoard) => {
+    axios
+      .post(`${URL}/boards`, newBoard)
+      .then((response) => {
+        console.log(response.data);
+        console.log(boardListData)
+        const newBoardList = [...boardListData];
+        newBoardList.push({
+          id: response.data.id,
+          title: response.data.title,
+          owner: response.data.owner
+        });
+        setBoardListData(newBoardList);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  };
+
   return (
     <div id='App'>
       <header className='App-header'>
@@ -128,8 +155,15 @@ function App() {
                 : 'Select a Board from the Board List!'}
             </p>
           </section>
-
           <section className='grid-item' id='new-board'>
+            <h2>CREATE A NEW BOARD</h2>
+            {boardFormVisible ? <NewBoardForm addFormCallback={addNewBoard}>
+            </NewBoardForm> : ''}
+            <button className='toggle-new-board-form' onClick={hideBoardForm}>{boardFormVisible ? 'Hide Form' : 'Show Form'}
+            </button>
+          </section>
+
+          {/* <section className='grid-item' id='new-board'>
             <h2>CREATE A NEW BOARD</h2>
             <form>
               <label>Title: </label>
@@ -146,7 +180,7 @@ function App() {
             <button className='toggle-new-board-form'>
               Hide New Board Form
             </button>
-          </section>
+          </section> */}
         </div>
 
         <div className='card-container'>

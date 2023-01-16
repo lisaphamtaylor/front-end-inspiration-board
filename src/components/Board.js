@@ -19,7 +19,7 @@ const Board = ({ id, title, owner, cards }) => {
   return (
     <div>
       {title}
-      <ol>{<CardList cards={cards} />}</ol>
+      <ol>{<CardList cards={cards}/>}</ol>
     </div>
   );
 };

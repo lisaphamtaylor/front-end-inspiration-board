@@ -1,8 +1,7 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
-import Card from './Card.js'
 
-const NewCardForm = (props) => {
+const NewCardForm = ({addCardCallback}) => {
     const [formFields, setFormFields] = useState({
         message: '',
         likes_count: 0,
@@ -19,7 +18,7 @@ const NewCardForm = (props) => {
     const onFormSubmit = (event) => {
         event.preventDefault();
 
-        props.addCardCallback({
+        addCardCallback({
             message: formFields.message,
             likes_count: 0
         });
@@ -36,11 +35,7 @@ const NewCardForm = (props) => {
         <form onSubmit={onFormSubmit}>
             <label htmlFor="card-message">Message: </label>
             <input name="card-message" type='text' value={formFields.message} onChange={onMessageChange}/>
-            <p>Preview: <Card
-            id={formFields.id}
-            message={formFields.message}
-            likes_count={0}
-        /></p>
+            <p>Preview: {formFields.message}</p>
             <input type='Submit'></input>
         </form>
     );
