@@ -4,6 +4,7 @@ import BoardList from './components/BoardList';
 import CardList from './components/CardList';
 import Board from './components/Board';
 import axios from 'axios';
+import NewCardForm from './components/NewCardForm';
 
 function App() {
   const [boardListData, setBoardListData] = useState([]);
@@ -68,6 +69,26 @@ function App() {
       });
   };
 
+  const addCardData = (newCard) => {
+    axios
+      .post(`${URL}/boards/${selectedBoard.id}/cards`, newCard)
+      .then((response) =>{
+        console.log(response.data)
+        const newCardList = [...cardsData];
+        newCardList.push({
+          id: response.data.id,
+          message: response.data.message,
+          likes_count: response.data.likes_count
+        });
+        setCardsData(newCardList);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  };
+
   return (
     <div id='App'>
       <header className='App-header'>
@@ -77,12 +98,12 @@ function App() {
         <img
           alt='cartoon of llama'
           src={require('./images/happy-llama.png')}
-          class='flipped-llama'
+          className='flipped-llama'
         />
         <img
           alt='cartoon image of llama'
           src={require('./images/happy-llama.png')}
-          class='flipped-llama'
+          className='flipped-llama'
         />
       </header>
 
@@ -131,17 +152,21 @@ function App() {
         <div className='card-container'>
           <section className='grid-item'>
             <h2>CARDS FOR BOARD TITLE</h2>
-            {selectedBoard.id ? <CardList cards={cardsData}></CardList> : ''}
+            {selectedBoard.id ? <CardList cards={cardsData}></CardList>: ''}
           </section>
 
           <section className='grid-item' id='new-card'>
             <h2>CREATE A NEW CARD</h2>
-            <form>
+            <NewCardForm addCardCallback={addCardData}>
+            </NewCardForm>
+            {/* <form>
               <label>Message: </label>
               <input type='text' />
-            </form>
-            <p>Preview: Message</p>
-            <input type='Submit'></input>
+              <p>Preview: Message</p>
+              <input type='Submit'></input>
+            </form> */}
+            {/* <p>Preview: Message</p>
+            <input type='Submit'></input> */}
           </section>
         </div>
       </main>
