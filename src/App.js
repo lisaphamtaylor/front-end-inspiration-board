@@ -177,7 +177,12 @@ function App() {
           {cardContainerInvisible ? (
             <div className='card-container'>
               <section className='grid-item'>
-                <h2>CARDS FOR BOARD TITLE</h2>
+                <h2>
+                  CARDS FOR{' '}
+                  {selectedBoard.id
+                    ? `${selectedBoard.title.toUpperCase()}`
+                    : ''}
+                </h2>
                 {selectedBoard.id ? (
                   <CardList cards={cardsData}></CardList>
                 ) : (
