@@ -173,9 +173,9 @@ function App() {
           </section>
         </div>
 
-        <div className='card-container'>
+        <div>
           {cardContainerInvisible ? (
-            <div>
+            <div className='card-container'>
               <section className='grid-item'>
                 <h2>CARDS FOR BOARD TITLE</h2>
                 {selectedBoard.id ? (
