@@ -14,12 +14,17 @@ function App() {
     owner: '',
     board_id: null,
   });
+  const [cardsData, setCardsData] = useState([]);
   const [boardFormVisible, setBoardFormVisible] = useState(true);
   const hideBoardForm = () => {
     setBoardFormVisible(!boardFormVisible);
   };
 
-  const [cardsData, setCardsData] = useState([]);
+  const [cardContainerInvisible, setCardContainerVisible] = useState(false);
+  const showCardContainer = () => {
+    setCardContainerVisible(true);
+  };
+
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
   const boardInfoFromJson = (board) => {
@@ -52,9 +57,9 @@ function App() {
   useEffect(() => {
     refreshBoards();
   }, []);
-  useEffect(() => {
-    refreshBoards();
-  }, [boardListData]);
+  // useEffect(() => {
+  //   refreshBoards();
+  // }, [boardListData]);
 
   const getBoard = (id) => {
     axios
@@ -62,6 +67,7 @@ function App() {
       .then((response) => {
         const board = response.data;
         setSelectedBoard(board);
+        showCardContainer();
         axios
           .get(`${URL}/boards/${id}/cards`)
           .then((response) => {
@@ -168,23 +174,33 @@ function App() {
         </div>
 
         <div className='card-container'>
-          <section className='grid-item'>
-            <h2>CARDS FOR BOARD TITLE</h2>
-            {selectedBoard.id ? <CardList cards={cardsData}></CardList> : ''}
-          </section>
+          {cardContainerInvisible ? (
+            <div>
+              <section className='grid-item'>
+                <h2>CARDS FOR BOARD TITLE</h2>
+                {selectedBoard.id ? (
+                  <CardList cards={cardsData}></CardList>
+                ) : (
+                  ''
+                )}
+              </section>
 
-          <section className='grid-item' id='new-card'>
-            <h2>CREATE A NEW CARD</h2>
-            <NewCardForm addCardCallback={addCardData}></NewCardForm>
-            {/* <form>
+              <section className='grid-item' id='new-card'>
+                <h2>CREATE A NEW CARD</h2>
+                <NewCardForm addCardCallback={addCardData}></NewCardForm>
+                {/* <form>
               <label>Message: </label>
               <input type='text' />
               <p>Preview: Message</p>
               <input type='Submit'></input>
             </form> */}
-            {/* <p>Preview: Message</p>
+                {/* <p>Preview: Message</p>
             <input type='Submit'></input> */}
-          </section>
+              </section>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </main>
     </div>
