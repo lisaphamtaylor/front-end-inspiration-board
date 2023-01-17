@@ -16,8 +16,8 @@ function App() {
   });
   const [boardFormVisible, setBoardFormVisible] = useState(true);
   const hideBoardForm = () => {
-    setBoardFormVisible(!boardFormVisible)
-  }
+    setBoardFormVisible(!boardFormVisible);
+  };
 
   const [cardsData, setCardsData] = useState([]);
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
@@ -52,6 +52,9 @@ function App() {
   useEffect(() => {
     refreshBoards();
   }, []);
+  useEffect(() => {
+    refreshBoards();
+  }, [boardListData]);
 
   const getBoard = (id) => {
     axios
@@ -62,7 +65,7 @@ function App() {
         axios
           .get(`${URL}/boards/${id}/cards`)
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             const cardsArray = response.data;
             setCardsData(cardsArray);
           })
@@ -78,21 +81,19 @@ function App() {
   const addCardData = (newCard) => {
     axios
       .post(`${URL}/boards/${selectedBoard.id}/cards`, newCard)
-      .then((response) =>{
-        console.log(response.data)
+      .then((response) => {
+        console.log(response.data);
         const newCardList = [...cardsData];
         newCardList.push({
           id: response.data.id,
           message: response.data.message,
-          likes_count: response.data.likes_count
+          likes_count: response.data.likes_count,
         });
         setCardsData(newCardList);
-
       })
       .catch((error) => {
         console.log(error);
       });
-
   };
 
   const addNewBoard = (newBoard) => {
@@ -100,30 +101,14 @@ function App() {
       .post(`${URL}/boards`, newBoard)
       .then((response) => {
         console.log(response.data);
-        console.log(boardListData)
+        console.log(boardListData);
         const newBoardList = [...boardListData];
         newBoardList.push({
           id: response.data.id,
           title: response.data.title,
-          owner: response.data.owner
+          owner: response.data.owner,
         });
         setBoardListData(newBoardList);
-
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-  };
-
-  const deleteCard = (card_id) => {
-    axios
-      .delete(`${URL}/cards/${card_id}`)
-      .then((response) => {
-        console.log(response.data)
-        setCardsData(oldCard => {
-          return oldCard.filter(card => card.id!==card_id)
-        });
       })
       .catch((error) => {
         console.log(error);
@@ -171,42 +156,26 @@ function App() {
           </section>
           <section className='grid-item' id='new-board'>
             <h2>CREATE A NEW BOARD</h2>
-            {boardFormVisible ? <NewBoardForm addFormCallback={addNewBoard}>
-            </NewBoardForm> : ''}
-            <button className='toggle-new-board-form' onClick={hideBoardForm}>{boardFormVisible ? 'Hide Form' : 'Show Form'}
+            {boardFormVisible ? (
+              <NewBoardForm addFormCallback={addNewBoard}></NewBoardForm>
+            ) : (
+              ''
+            )}
+            <button className='toggle-new-board-form' onClick={hideBoardForm}>
+              {boardFormVisible ? 'Hide Form' : 'Show Form'}
             </button>
           </section>
-
-          {/* <section className='grid-item' id='new-board'>
-            <h2>CREATE A NEW BOARD</h2>
-            <form>
-              <label>Title: </label>
-              <input type='text' />
-              <br />
-              <br />
-              <label>Owner's Name: </label>
-              <input type='text' />
-            </form>
-            <br />
-            <p>Preview: Title - Owner's Name</p>
-            <input type='Submit'></input>
-
-            <button className='toggle-new-board-form'>
-              Hide New Board Form
-            </button>
-          </section> */}
         </div>
 
         <div className='card-container'>
           <section className='grid-item'>
             <h2>CARDS FOR BOARD TITLE</h2>
-            {selectedBoard.id ? <CardList cards={cardsData}></CardList>: ''}
+            {selectedBoard.id ? <CardList cards={cardsData}></CardList> : ''}
           </section>
 
           <section className='grid-item' id='new-card'>
             <h2>CREATE A NEW CARD</h2>
-            <NewCardForm addCardCallback={addCardData}>
-            </NewCardForm>
+            <NewCardForm addCardCallback={addCardData}></NewCardForm>
             {/* <form>
               <label>Message: </label>
               <input type='text' />

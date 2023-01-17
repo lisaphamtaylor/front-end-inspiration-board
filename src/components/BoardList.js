@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Board from './Board';
 
-const BoardList = ({ boards, onSelectBoard }) => {
+const BoardList = ({ boards, onSelectBoard, onDeleteCard }) => {
   const boardComponents = boards.map((board, index) => {
     return (
       <div key={index}>
@@ -32,7 +32,6 @@ BoardList.propTypes = {
           message: PropTypes.string,
           likes_count: PropTypes.number,
           setLikesCount: PropTypes.func,
-          onDeleteCard: PropTypes.func.isRequired
         })
       ),
     })

@@ -5,20 +5,19 @@ import axios from 'axios';
 // import URL from '../App.js'
 
 const Card = ({ id, message, likes_count, onDeleteCard }) => {
-  const [likesCount, setLikesCount] = useState(0);
+  const [likesCount, setLikesCount] = useState(likes_count);
   const card_id = id;
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
   const increaseLikes = () => {
-    console.log("Inside increase likes!");
-    console.log(card_id);
-    console.log(likesCount);
-    setLikesCount(likesCount +1);
-    console.log(likesCount);
+    // console.log('hits increaseLikes');
+    // console.log(card_id);
+
     axios
-      .put(`${URL}/cards/${card_id}/like`, {likes_count : likesCount})
+      .put(`${URL}/cards/${card_id}/like`, { likes_count: likesCount + 1 })
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
+        setLikesCount(likesCount + 1);
       })
       .catch((error) => {
         console.log(error);
@@ -36,8 +35,6 @@ const Card = ({ id, message, likes_count, onDeleteCard }) => {
   //     });
   // };
 
-
-
   return (
     <div className='card-item'>
       <p className='card-message'>{message}</p>
@@ -45,10 +42,14 @@ const Card = ({ id, message, likes_count, onDeleteCard }) => {
         <p className='card-total-likes'>{likes_count} 💕</p>
       </li>
       <li>
-        <button className='card-like-button' onClick={increaseLikes}>+1</button>
+        <button className='card-like-button' onClick={increaseLikes}>
+          +1
+        </button>
       </li>
       <li>
-        <button className='card-delete-button' onClick={() => onDeleteCard(id)}>Delete</button>
+        <button className='card-delete-button' onClick={() => onDeleteCard(id)}>
+          Delete
+        </button>
       </li>
     </div>
   );
@@ -59,7 +60,7 @@ Card.propTypes = {
   message: PropTypes.string,
   likes_count: PropTypes.number,
   setLikesCount: PropTypes.func,
-  onDeleteCard: PropTypes.func.isRequired
+  onDeleteCard: PropTypes.func,
 };
 
 export default Card;

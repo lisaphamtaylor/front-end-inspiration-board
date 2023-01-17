@@ -3,23 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CardList from './CardList';
 
-const Board = ({ id, title, owner, cards }) => {
-  // const cardComponents = cards.map((card, index) => {
-  //   return (
-  //     <div key={index}>
-  //       <Card
-  //         card_id={card.card_id}
-  //         message={card.message}
-  //         likes_count={card.likes_count}
-  //       />
-  //     </div>
-  //   );
-  // });
-
+const Board = ({ id, title, owner, cards, onDeleteCard }) => {
   return (
     <div>
       {title}
-      <ol>{<CardList cards={cards}/>}</ol>
+      <ol>{<CardList cards={cards} />}</ol>
     </div>
   );
 };
