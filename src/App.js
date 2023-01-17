@@ -116,6 +116,20 @@ function App() {
 
   };
 
+  const deleteCard = (card_id) => {
+    axios
+      .delete(`${URL}/cards/${card_id}`)
+      .then((response) => {
+        console.log(response.data)
+        setCardsData(oldCard => {
+          return oldCard.filter(card => card.id!==card_id)
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div id='App'>
       <header className='App-header'>

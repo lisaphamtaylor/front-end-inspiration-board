@@ -31,7 +31,8 @@ BoardList.propTypes = {
           card_id: PropTypes.number.isRequired,
           message: PropTypes.string,
           likes_count: PropTypes.number,
-          setLikesCount: PropTypes.func
+          setLikesCount: PropTypes.func,
+          onDeleteCard: PropTypes.func.isRequired
         })
       ),
     })
