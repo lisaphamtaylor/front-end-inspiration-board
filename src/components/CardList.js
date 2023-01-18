@@ -26,7 +26,6 @@ const CardList = ({ cards }) => {
   // useEffect(deleteCard, []);
 
   const cardComponents = cards.map((card, index) => {
-    // console.log(card);
     return (
       <div key={index}>
         <Card

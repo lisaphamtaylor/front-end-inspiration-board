@@ -21,7 +21,6 @@ li {
 .board-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* justify-content: space-around; */
 }
 
 .card-container {
@@ -53,15 +52,6 @@ li {
 .flipped-llama {
   transform: scaleX(-1);
 
-}
-
-.grid-item {
-  /* border-color: black;
-  border-radius: 5em;
-  border-style: dashed;
-  padding: 1em;
-  margin: 1em; */
-  
 }
 
 .App-header {

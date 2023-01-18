@@ -1,18 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Board from './Board';
 
 const BoardList = ({ boards, onSelectBoard, onDeleteCard }) => {
   const boardComponents = boards.map((board, index) => {
     return (
       <div key={index}>
         <div onClick={() => onSelectBoard(board.id)}>{board.title}</div>
-        {/* <Board
-          id={board.id}
-          title={board.title}
-          owner={board.owner}
-          cards={[]}
-        /> */}
       </div>
     );
   });

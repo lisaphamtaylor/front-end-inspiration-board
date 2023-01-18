@@ -2,7 +2,6 @@ import '../App.css';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import axios from 'axios';
-// import URL from '../App.js'
 
 const Card = ({ id, message, likes_count, onDeleteCard }) => {
   const [likesCount, setLikesCount] = useState(likes_count);
@@ -10,9 +9,6 @@ const Card = ({ id, message, likes_count, onDeleteCard }) => {
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
   const increaseLikes = () => {
-    // console.log('hits increaseLikes');
-    // console.log(card_id);
-
     axios
       .put(`${URL}/cards/${card_id}/like`, { likes_count: likesCount + 1 })
       .then((response) => {
@@ -23,17 +19,6 @@ const Card = ({ id, message, likes_count, onDeleteCard }) => {
         console.log(error);
       });
   };
-
-  // const deleteCard = () => {
-  //   axios
-  //     .delete(`${URL}/cards/${card_id}`)
-  //     .then((response) => {
-  //       console.log(response.data)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   return (
     <div className='card-item'>

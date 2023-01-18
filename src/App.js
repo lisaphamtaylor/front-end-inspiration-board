@@ -71,7 +71,6 @@ function App() {
         axios
           .get(`${URL}/boards/${id}/cards`)
           .then((response) => {
-            // console.log(response.data);
             const cardsArray = response.data;
             setCardsData(cardsArray);
           })
@@ -193,14 +192,6 @@ function App() {
               <section className='grid-item' id='new-card'>
                 <h2>CREATE A NEW CARD</h2>
                 <NewCardForm addCardCallback={addCardData}></NewCardForm>
-                {/* <form>
-              <label>Message: </label>
-              <input type='text' />
-              <p>Preview: Message</p>
-              <input type='Submit'></input>
-            </form> */}
-                {/* <p>Preview: Message</p>
-            <input type='Submit'></input> */}
               </section>
             </div>
           ) : (
