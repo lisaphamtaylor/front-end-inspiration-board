@@ -135,18 +135,16 @@ function App() {
         console.log(`after put:`);
         console.log(response.data);
         const updatedCard = response.data;
-        // const newCardList = cardsData;
-        for (let card of cardsData) {
+        const newCardList = [...cardsData];
+
+        for (let card of newCardList) {
           if (card_id === card.id) {
             card.likes_count = updatedCard.likes_count;
           }
         }
-        // console.log(`newCardsList ${newCardList}`);
-        console.log(cardsData);
-        setCardsData(cardsData);
 
-        // updatedCardsList.push(updatedCard);
-        // setCardsData(updatedCardsList);
+        console.log(newCardList);
+        setCardsData(newCardList);
       })
       .catch((error) => {
         console.log(error);
