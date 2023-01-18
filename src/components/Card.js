@@ -3,36 +3,31 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Card = ({ id, message, likes_count, onDeleteCard }) => {
-  const [likesCount, setLikesCount] = useState(likes_count);
-  const card_id = id;
-  const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
+const Card = (props) => {
+  // const [likesCount, setLikesCount] = useState(likes_count);
+  // const card_id = id;
+  // const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
-  const increaseLikes = () => {
-    axios
-      .put(`${URL}/cards/${card_id}/like`, { likes_count: likesCount + 1 })
-      .then((response) => {
-        console.log(response.data);
-        setLikesCount(likesCount + 1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const clickIncreaseLikes = (event) => {
+    return props.onIncreaseLikes(props.id);
   };
 
   return (
     <div className='card-item'>
-      <p className='card-message'>{message}</p>
+      <p className='card-message'>{props.message}</p>
       <li>
-        <p className='card-total-likes'>{likes_count} 💕</p>
+        <p className='card-total-likes'>{props.likes_count} 💕</p>
       </li>
       <li>
-        <button className='card-like-button' onClick={increaseLikes}>
+        <button className='card-like-button' onClick={clickIncreaseLikes}>
           +1
         </button>
       </li>
       <li>
-        <button className='card-delete-button' onClick={() => onDeleteCard(id)}>
+        <button
+          className='card-delete-button'
+          onClick={() => props.onDeleteCard(props.id)}
+        >
           Delete
         </button>
       </li>
@@ -46,6 +41,7 @@ Card.propTypes = {
   likes_count: PropTypes.number,
   setLikesCount: PropTypes.func,
   onDeleteCard: PropTypes.func,
+  onIncreaseLikes: PropTypes.func,
 };
 
 export default Card;

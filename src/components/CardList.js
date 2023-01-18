@@ -5,7 +5,7 @@ import Card from './Card';
 import axios from 'axios';
 // import refreshBoards from '../App';
 
-const CardList = ({ cards }) => {
+const CardList = (props) => {
   const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
   const [cardsData, setCardsData] = useState([]);
 
@@ -23,9 +23,9 @@ const CardList = ({ cards }) => {
         console.log(error);
       });
   };
-  // useEffect(deleteCard, []);
+  // useEffect(deleteCard, [cardsData]);
 
-  const cardComponents = cards.map((card, index) => {
+  const cardComponents = props.cards.map((card, index) => {
     return (
       <div key={index}>
         <Card
@@ -33,6 +33,7 @@ const CardList = ({ cards }) => {
           message={card.message}
           likes_count={card.likes_count}
           onDeleteCard={deleteCard}
+          onIncreaseLikes={props.onIncreaseLikes}
         />
       </div>
     );
@@ -50,6 +51,7 @@ CardList.propTypes = {
     })
   ),
   onDeleteCard: PropTypes.func,
+  onIncreaseLikes: PropTypes.func,
 };
 
 export default CardList;

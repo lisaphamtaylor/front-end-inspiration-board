@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const BoardList = ({ boards, onSelectBoard, onDeleteCard }) => {
-  const boardComponents = boards.map((board, index) => {
+const BoardList = (props) => {
+  const boardComponents = props.boards.map((board, index) => {
     return (
       <div key={index}>
-        <div onClick={() => onSelectBoard(board.id)}>{board.title}</div>
+        <div onClick={() => props.onSelectBoard(board.id)}>{board.title}</div>
       </div>
     );
   });
@@ -24,7 +24,8 @@ BoardList.propTypes = {
           card_id: PropTypes.number.isRequired,
           message: PropTypes.string,
           likes_count: PropTypes.number,
-          setLikesCount: PropTypes.func,
+
+          // setLikesCount: PropTypes.func,
         })
       ),
     })

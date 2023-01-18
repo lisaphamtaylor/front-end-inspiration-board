@@ -2,19 +2,31 @@ import './App.css';
 import { React, useEffect, useState } from 'react';
 import BoardList from './components/BoardList';
 import CardList from './components/CardList';
+import Card from './components/Card';
 import Board from './components/Board';
 import axios from 'axios';
 import NewCardForm from './components/NewCardForm';
 import NewBoardForm from './components/NewBoardForm';
 
 function App() {
+  const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
+
   const [boardListData, setBoardListData] = useState([]);
+  const [cardsData, setCardsData] = useState([]);
+
   const [selectedBoard, setSelectedBoard] = useState({
     title: '',
     owner: '',
     board_id: null,
   });
-  const [cardsData, setCardsData] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({
+    id: null,
+    message: '',
+    likes_count: 0,
+  });
+
+  // const [likesCount, setLikesCount] = useState(likes_count);
+
   const [boardFormVisible, setBoardFormVisible] = useState(true);
   const hideBoardForm = () => {
     setBoardFormVisible(!boardFormVisible);
@@ -24,8 +36,6 @@ function App() {
   const showCardContainer = () => {
     setCardContainerVisible(true);
   };
-
-  const URL = 'https://llammmas-inspo-board-back-end.herokuapp.com';
 
   const boardInfoFromJson = (board) => {
     const { id, title, owner } = board;
@@ -59,7 +69,7 @@ function App() {
   }, []);
   // useEffect(() => {
   //   refreshBoards();
-  // }, [boardListData]);
+  // }, [cardsData]);
 
   const getBoard = (id) => {
     axios
@@ -100,6 +110,50 @@ function App() {
         console.log(error);
       });
   };
+
+  const increaseLikes = (card_id) => {
+    //loop over cardsData,
+    //if id===card_id
+    //selectedCard variable to call likes_count
+    //in .then response, duplicate cardData find position of selectedCard and update
+    let selectedCard = null;
+    for (const card of cardsData) {
+      if (card_id === card.id) {
+        selectedCard = card;
+        console.log(
+          `card id ${selectedCard.id}. likesCount before put ${selectedCard.likes_count}`
+        );
+        // const newLikesCount = selectedCard.likes_count + 1;
+      }
+    }
+
+    axios
+      .put(`${URL}/cards/${card_id}/like`, {
+        likes_count: selectedCard.likes_count + 1,
+      })
+      .then((response) => {
+        console.log(`after put:`);
+        console.log(response.data);
+        const updatedCard = response.data;
+        // const newCardList = cardsData;
+        for (let card of cardsData) {
+          if (card_id === card.id) {
+            card.likes_count = updatedCard.likes_count;
+          }
+        }
+        // console.log(`newCardsList ${newCardList}`);
+        console.log(cardsData);
+        setCardsData(cardsData);
+
+        // updatedCardsList.push(updatedCard);
+        // setCardsData(updatedCardsList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  //delete function, look into filter() function
 
   const addNewBoard = (newBoard) => {
     axios
@@ -183,10 +237,15 @@ function App() {
                     : ''}
                 </h2>
                 {selectedBoard.id ? (
-                  <CardList cards={cardsData}></CardList>
+                  <CardList
+                    cards={cardsData}
+                    onIncreaseLikes={increaseLikes}
+                  ></CardList>
                 ) : (
                   ''
                 )}
+
+                {/* <Card onIncreaseLikes={increaseLikes}></Card> */}
               </section>
 
               <section className='grid-item' id='new-card'>

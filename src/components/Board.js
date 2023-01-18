@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CardList from './CardList';
 
-const Board = ({ id, title, owner, cards, onDeleteCard }) => {
+const Board = (props) => {
   return (
     <div>
-      {title}
-      <ol>{<CardList cards={cards} />}</ol>
+      {props.title}
+      <ol>{<CardList cards={props.cards} />}</ol>
     </div>
   );
 };
