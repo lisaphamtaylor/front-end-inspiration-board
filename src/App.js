@@ -2,8 +2,6 @@ import './App.css';
 import { React, useEffect, useState } from 'react';
 import BoardList from './components/BoardList';
 import CardList from './components/CardList';
-import Card from './components/Card';
-import Board from './components/Board';
 import axios from 'axios';
 import NewCardForm from './components/NewCardForm';
 import NewBoardForm from './components/NewBoardForm';
@@ -19,13 +17,6 @@ function App() {
     owner: '',
     board_id: null,
   });
-  const [selectedCard, setSelectedCard] = useState({
-    id: null,
-    message: '',
-    likes_count: 0,
-  });
-
-  // const [likesCount, setLikesCount] = useState(likes_count);
 
   const [boardFormVisible, setBoardFormVisible] = useState(true);
   const hideBoardForm = () => {
@@ -50,7 +41,8 @@ function App() {
         return newBoardList;
       })
       .catch((error) => {
-        console.log(error);
+        console.log('Error:', error);
+        alert("Couldn't get boards list.");
       });
   };
 
@@ -60,16 +52,14 @@ function App() {
         setBoardListData(boards);
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log('Error:', error);
+        alert("Couldn't refresh boards list.");
       });
   };
 
   useEffect(() => {
     refreshBoards();
   }, []);
-  // useEffect(() => {
-  //   refreshBoards();
-  // }, [cardsData]);
 
   const getBoard = (id) => {
     axios
@@ -89,7 +79,8 @@ function App() {
           });
       })
       .catch((error) => {
-        console.log(error);
+        console.log('Error:', error);
+        alert("Couldn't get selected board.");
       });
   };
 
@@ -97,7 +88,6 @@ function App() {
     axios
       .post(`${URL}/boards/${selectedBoard.id}/cards`, newCard)
       .then((response) => {
-        console.log(response.data);
         const newCardList = [...cardsData];
         newCardList.push({
           id: response.data.id,
@@ -107,23 +97,16 @@ function App() {
         setCardsData(newCardList);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('Error:', error);
+        alert("Couldn't add new card.");
       });
   };
 
   const increaseLikes = (card_id) => {
-    //loop over cardsData,
-    //if id===card_id
-    //selectedCard variable to call likes_count
-    //in .then response, duplicate cardData find position of selectedCard and update
     let selectedCard = null;
     for (const card of cardsData) {
       if (card_id === card.id) {
         selectedCard = card;
-        console.log(
-          `card id ${selectedCard.id}. likesCount before put ${selectedCard.likes_count}`
-        );
-        // const newLikesCount = selectedCard.likes_count + 1;
       }
     }
 
@@ -132,8 +115,6 @@ function App() {
         likes_count: selectedCard.likes_count + 1,
       })
       .then((response) => {
-        console.log(`after put:`);
-        console.log(response.data);
         const updatedCard = response.data;
         const newCardList = [...cardsData];
 
@@ -143,22 +124,32 @@ function App() {
           }
         }
 
-        console.log(newCardList);
         setCardsData(newCardList);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('Error:', error);
+        alert("Couldn't increase card likes.");
       });
   };
 
-  //delete function, look into filter() function
+  const deleteCard = (card_id) => {
+    axios
+      .delete(`${URL}/cards/${card_id}`)
+      .then((response) => {
+        setCardsData((oldCard) => {
+          return oldCard.filter((card) => card.id !== card_id);
+        });
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+        alert("Couldn't delete card.");
+      });
+  };
 
   const addNewBoard = (newBoard) => {
     axios
       .post(`${URL}/boards`, newBoard)
       .then((response) => {
-        console.log(response.data);
-        console.log(boardListData);
         const newBoardList = [...boardListData];
         newBoardList.push({
           id: response.data.id,
@@ -168,7 +159,8 @@ function App() {
         setBoardListData(newBoardList);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('Error:', error);
+        alert("Couldn't add new board");
       });
   };
 
@@ -238,12 +230,11 @@ function App() {
                   <CardList
                     cards={cardsData}
                     onIncreaseLikes={increaseLikes}
+                    onDeleteCard={deleteCard}
                   ></CardList>
                 ) : (
                   ''
                 )}
-
-                {/* <Card onIncreaseLikes={increaseLikes}></Card> */}
               </section>
 
               <section className='grid-item' id='new-card'>
