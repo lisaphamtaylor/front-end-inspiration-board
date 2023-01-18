@@ -1,11 +1,35 @@
 import '../App.css';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { React, useState } from 'react';
 
 const Card = (props) => {
+  const [cardsColor, setCardsColor] = useState('lightseagreen');
+
+  const changeCardColor = (event) => {
+    const newColor = event.target.value;
+    setCardsColor(newColor);
+    console.log(newColor);
+  };
+
   return (
-    <div className='card-item'>
+    <div className='card-item' id={cardsColor}>
       <p className='card-message'>{props.message}</p>
+      <li>
+        <label>Change the card color: </label>
+        <select id='card-color-selection' onChange={changeCardColor}>
+          <option value='lightseagreen'>Teal</option>
+          <option value='pink'>Pink</option>
+          <option value='red'>Red</option>
+
+          <option value='orange'>Orange</option>
+          <option value='yellow'>Yellow</option>
+          <option value='green'>Green</option>
+          <option value='blue'>Blue</option>
+
+          <option value='lavender'>Lavender</option>
+          <option value='grey'>Slate Grey</option>
+        </select>
+      </li>
       <li>
         <p className='card-total-likes'>{props.likes_count} 💕</p>
       </li>

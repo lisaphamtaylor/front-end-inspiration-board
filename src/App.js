@@ -84,6 +84,24 @@ function App() {
       });
   };
 
+  const addNewBoard = (newBoard) => {
+    axios
+      .post(`${URL}/boards`, newBoard)
+      .then((response) => {
+        const newBoardList = [...boardListData];
+        newBoardList.push({
+          id: response.data.id,
+          title: response.data.title,
+          owner: response.data.owner,
+        });
+        setBoardListData(newBoardList);
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+        alert("Couldn't add new board");
+      });
+  };
+
   const addCardData = (newCard) => {
     axios
       .post(`${URL}/boards/${selectedBoard.id}/cards`, newCard)
@@ -146,24 +164,6 @@ function App() {
       });
   };
 
-  const addNewBoard = (newBoard) => {
-    axios
-      .post(`${URL}/boards`, newBoard)
-      .then((response) => {
-        const newBoardList = [...boardListData];
-        newBoardList.push({
-          id: response.data.id,
-          title: response.data.title,
-          owner: response.data.owner,
-        });
-        setBoardListData(newBoardList);
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-        alert("Couldn't add new board");
-      });
-  };
-
   return (
     <div id='App'>
       <header className='App-header'>
@@ -197,22 +197,28 @@ function App() {
 
           <section className='grid-item' id='selected-board'>
             <h2>SELECTED BOARD</h2>
-            <p>
-              {selectedBoard.id
-                ? `${selectedBoard.title} - ${selectedBoard.owner}`
-                : 'Select a Board from the Board List!'}
-            </p>
+            <div>
+              <h3>
+                {selectedBoard.id
+                  ? `${selectedBoard.title} - ${selectedBoard.owner}`
+                  : 'Select a Board from the Board List!'}
+              </h3>
+              <br />
+            </div>
           </section>
           <section className='grid-item' id='new-board'>
             <h2>CREATE A NEW BOARD</h2>
-            {boardFormVisible ? (
-              <NewBoardForm addFormCallback={addNewBoard}></NewBoardForm>
-            ) : (
-              ''
-            )}
-            <button className='toggle-new-board-form' onClick={hideBoardForm}>
-              {boardFormVisible ? 'Hide Form' : 'Show Form'}
-            </button>
+            <br />
+            <div>
+              {boardFormVisible ? (
+                <NewBoardForm addFormCallback={addNewBoard}></NewBoardForm>
+              ) : (
+                ''
+              )}
+              <button className='toggle-new-board-form' onClick={hideBoardForm}>
+                {boardFormVisible ? 'Hide Form' : 'Show Form'}
+              </button>
+            </div>
           </section>
         </div>
 
@@ -226,15 +232,17 @@ function App() {
                     ? `${selectedBoard.title.toUpperCase()}`
                     : ''}
                 </h2>
-                {selectedBoard.id ? (
-                  <CardList
-                    cards={cardsData}
-                    onIncreaseLikes={increaseLikes}
-                    onDeleteCard={deleteCard}
-                  ></CardList>
-                ) : (
-                  ''
-                )}
+                <div>
+                  {selectedBoard.id ? (
+                    <CardList
+                      cards={cardsData}
+                      onIncreaseLikes={increaseLikes}
+                      onDeleteCard={deleteCard}
+                    ></CardList>
+                  ) : (
+                    ''
+                  )}
+                </div>
               </section>
 
               <section className='grid-item' id='new-card'>
