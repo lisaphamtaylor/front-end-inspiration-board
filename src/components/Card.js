@@ -20,13 +20,11 @@ const Card = (props) => {
           <option value='lightseagreen'>Teal</option>
           <option value='pink'>Pink</option>
           <option value='red'>Red</option>
-
           <option value='orange'>Orange</option>
           <option value='yellow'>Yellow</option>
           <option value='green'>Green</option>
           <option value='blue'>Blue</option>
-
-          <option value='lavender'>Lavender</option>
+          <option value='lavender'>Purple</option>
           <option value='grey'>Slate Grey</option>
         </select>
       </li>

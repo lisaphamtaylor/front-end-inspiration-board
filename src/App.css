@@ -102,15 +102,8 @@ li {
   background-color: pink;
 }
 
-#lavender {
-  background-color: lavender;
-}
-
-#grey {
-  background-color: slategray;
-}
 #red {
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.784);
 }
 
 #orange {
@@ -126,5 +119,15 @@ li {
 }
 
 #blue {
-  background-color: blue;
+  background-color: rgb(0, 136, 255);
 }
+
+#lavender {
+  background-color: rgb(190, 89, 190);
+}
+
+#grey {
+  background-color: slategray;
+}
+
+
