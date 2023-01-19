@@ -84,6 +84,22 @@ function App() {
       });
   };
 
+  const deleteBoard = (event) => {
+    const board_id = selectedBoard.id;
+    axios
+      .delete(`${URL}/boards/${board_id}`)
+      .then((response) => {
+        setBoardListData((oldBoard) => {
+          return oldBoard.filter((board) => board.id !== board_id);
+        });
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+        alert("Couldn't delete board.");
+      });
+  };
+
   const addNewBoard = (newBoard) => {
     axios
       .post(`${URL}/boards`, newBoard)
@@ -204,6 +220,12 @@ function App() {
                   : 'Select a Board from the Board List!'}
               </h3>
               <br />
+
+              {selectedBoard.id ? (
+                <button onClick={deleteBoard}>Delete Board</button>
+              ) : (
+                ''
+              )}
             </div>
           </section>
           <section className='grid-item' id='new-board'>
